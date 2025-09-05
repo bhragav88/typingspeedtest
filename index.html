@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Test</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>⌨️ Typing Speed Test</h1>
+
+    {% if not text and not result %}
+      <form method="POST">
+        <button type="submit" name="choice" value="sentence">Single Sentence</button>
+        <button type="submit" name="choice" value="paragraph">Paragraph</button>
+      </form>
+    {% endif %}
+
+    {% if text %}
+      <p class="reference"><strong>Type this:</strong></p>
+      <p class="display">{{ text }}</p>
+
+      <form method="POST">
+        <textarea name="typed" placeholder="Start typing here..."></textarea>
+        <input type="hidden" name="original" value="{{ text }}">
+        <input type="hidden" name="start_time" value="{{ start_time }}">
+        <br>
+        <button type="submit">Finish</button>
+      </form>
+    {% endif %}
+
+    {% if result %}
+      <h2>📊 Results</h2>
+      <p>⏱ Time Taken: {{ result.time_taken }} seconds</p>
+      <p>📄 Words Typed: {{ result.words }}</p>
+      <p>⚡ Speed: {{ result.wpm }} WPM</p>
+      <p>✅ Accuracy: {{ result.accuracy }}%</p>
+      <br>
+      <a href="/">Try Again</a>
+    {% endif %}
+  </div>
+</body>
+</html>
